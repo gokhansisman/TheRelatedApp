@@ -5,8 +5,13 @@ import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './Screens/LoginScreen';
-import DashboardScreen from'./Screens/DashboardScreen';
+import DashboardScreen from './Screens/DashboardScreen';
+import SignUpScreen from './Screens/SignUpScreen';
+import Euromessage from './Euromessage'
+
 const Stack = createStackNavigator();
+
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -23,11 +28,15 @@ export default class App extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="Home"
+            name="Login"
             component={LoginScreen}
-            options={{ title: 'Related Digital' }}
+            options={{ title: 'Related Digital', left: null }}
           />
-          <Stack.Screen name="Dashboard" component={DashboardScreen} />
+          <Stack.Screen name="Dashboard" component={DashboardScreen} options={{
+            title: 'Dashboard', headerLeft: null,
+            gesturesEnabled: false,
+          }} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );

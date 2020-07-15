@@ -1,52 +1,12 @@
-import React, { Component } from 'react';
-import { Text, Alert, Button, View, StyleSheet } from 'react-native';
-import 'react-native-gesture-handler';
+import React from 'react'
 import { createAppContainer } from 'react-navigation'
 import { createDrawerNavigator } from 'react-navigation-drawer'
 import { Dimensions } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+
 import { ProfileScreen, MessageScreen, ActivityScreen, ListScreen, ReportScreen, StatisticScreen, SignOutScreen }
-    from '../components/index'
-import SideBar from '../components/SideBar.js'
-import { decode as atob, encode as btoa } from 'base-64'
-
-export default class DashboardScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: ''
-            //name: this.props.name,
-        }
-    }
-    static username=''
-    render() {
-        return (
-            <AppContainer />
-        );
-    }
-    componentDidMount() {
-        fetch('https://store.therelated.com/rest/V1/customers/me', {
-            method: 'get',
-            headers: new Headers({
-                'Authorization': 'Bearer ' + this.props.route.params.token
-                //'Content-Type': 'application/x-www-form-urlencoded'
-            }),
-            // body: ''
-        }).then(res => res.json())
-            .then(json => {
-                this.setState({
-                    data: json,
-                })
-                DashboardScreen.username=json.firstname
-                this.showData()
-            });
-    }
-    showData() {
-        
-    }
-}
-
-
+    from './index'
+import SideBar from './SideBar'
 
 const DrawerNavigator = createDrawerNavigator({
     ProfileScreen:
@@ -102,7 +62,7 @@ const DrawerNavigator = createDrawerNavigator({
         }
     }
 }, {
-    contentComponent: props => <SideBar {...props} data={DashboardScreen.username}/>,
+    contentComponent: props => <SideBar{...props} />,
     drawerWidth: Dimensions.get("window").width * 0.85,
     hideStatusBar: true, contentOptions:
     {
@@ -111,4 +71,6 @@ const DrawerNavigator = createDrawerNavigator({
             { marginTop: 16, marginHorizantal: 8 }, itemStyle: { borderRadius: 4 }
     }
 })
-const AppContainer = createAppContainer(DrawerNavigator);
+
+export default createAppContainer(DrawerNavigator)
+
