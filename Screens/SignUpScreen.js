@@ -54,39 +54,39 @@ export default class SignUp extends Component {
                 this.navigateToLoginScreen()
             });
             console.log('user successfully signed up!: ')
-           // this.navigateToLoginScreen()
+            // this.navigateToLoginScreen()
         } catch (err) {
             console.log('error signing up: ', err)
         }
     }
     async registerForPushNotificationsAsync() {
         const { status: existingStatus } = await Permissions.getAsync(
-          Permissions.NOTIFICATIONS
+            Permissions.NOTIFICATIONS
         );
         let finalStatus = existingStatus;
         // only ask if permissions have not already been determined, because
         // iOS won't necessarily prompt the user a second time.
         if (existingStatus !== 'granted') {
-          // Android remote notification permissions are granted during the app
-          // install, so this will only ask on iOS
-          const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-          finalStatus = status;
+            // Android remote notification permissions are granted during the app
+            // install, so this will only ask on iOS
+            const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+            finalStatus = status;
         }
         // Stop here if the user did not grant permissions
         if (finalStatus !== 'granted') {
-          return;
+            return;
         }
         // Get the token that uniquely identifies this device
         let token = await Notifications.getExpoPushTokenAsync();
         this.setState({
-          expoToken: token
+            expoToken: token
         })
-      }
+    }
     navigateToLoginScreen = () => {
         this.registerForPushNotificationsAsync()
-         var user = { keyID: this.state.KEY_ID, email: this.state.email, token: this.state.expoToken };
-         let api = Euromessage()
-        api.euromsg.setUser(user);      
+        var user = { keyID: this.state.KEY_ID, email: this.state.email, token: this.state.expoToken };
+        let api = Euromessage()
+        api.euromsg.setUser(user);
 
         this.props.navigation.navigate('Login', {
 

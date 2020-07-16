@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import { StylesProvider } from '@material-ui/core'
+
 
 export default class Screen extends React.Component {
     render() {

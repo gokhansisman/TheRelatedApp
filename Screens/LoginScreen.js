@@ -23,13 +23,13 @@ export default class LoginScreen extends Component {
       password: '',
       token: null,
       expoToken: null,
-      isLogin: ''
+      isLogin: '',
+      error: ''
     };
     this.onLogin = this.onLogin.bind(this)
     this.registerForPushNotificationsAsync = this.registerForPushNotificationsAsync.bind(this)
   }
   componentDidMount() {
-    this._storeData()
     this._retrieveData()
     if (Platform.OS === 'android') {
       Notifications.createChannelAndroidAsync('default', {
@@ -46,9 +46,18 @@ export default class LoginScreen extends Component {
       // Error saving data
     }
   };
+  _storeTokenLocal = async () => {
+    try {
+      await AsyncStorage.setItem(
+        'token', this.state.token);
+    } catch (error) {
+      // Error saving data
+    }
+  };
   _retrieveData = async () => {
     try {
       const isLogin = await AsyncStorage.getItem('isLogin');
+      console.log(isLogin)
       if (isLogin !== null) {
         this.setState({
           isLogin: isLogin
@@ -79,9 +88,6 @@ export default class LoginScreen extends Component {
       try {
         const isLogin = await AsyncStorage.setItem(
           'isLogin', 'true');
-        this.setState({
-          isLogin: isLogin
-        })
       } catch (error) {
         // Error saving data
       }
@@ -128,7 +134,7 @@ export default class LoginScreen extends Component {
   }
 
   onLogin() {
-    this.logIn()
+    // this.logIn()
     //fetch.
     //check credentials
     //navigation.
@@ -143,18 +149,31 @@ export default class LoginScreen extends Component {
         password: this.state.password
       })
     }).then(res => res.json()).then(res => {
-      console.log(res)
-      this.setState({
-        token: res
-      })
-      this.navigateToDashboard()
+      if (res.message == null) {
+        this.setState({
+          token: res
+        })
+        this.logIn()
+        this._storeTokenLocal()
+        this.navigateToDashboard()
+      } else {
+        this.setState({
+          error: res.message
+        })
+        // console.log(this.state.error)
+      }
+      // console.log(res)
+    }).catch((error) => {
+      // console.error(error)
+      // this.navigateToDashboard()
     });
   }
-  navigateToDashboard = () => {
+  navigateToDashboard = async () => {
     console.log(this.state.token)
+    let _token = await AsyncStorage.getItem('token')
     this.props.navigation.navigate('Dashboard', {
       userName: this.state.username,
-      token: this.state.token
+      token: _token
     })
   }
   navigateToSignUp = () => {
@@ -217,11 +236,11 @@ export default class LoginScreen extends Component {
     else {
       return (
         <View>
-          <Text>Welcome Again :)</Text>
+          <Text>Welcome {this.state.username}</Text>
           <Button
             title={'Contunie'}
             style={styles.input}
-            onPress={this.keepContunie.bind(this)}
+            onPress={this.navigateToDashboard}
           />
           <Button
             title={'Log Out'}
