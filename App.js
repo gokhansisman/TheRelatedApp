@@ -8,7 +8,7 @@ import LoginScreen from './Screens/LoginScreen';
 import DashboardScreen from './Screens/DashboardScreen';
 import SignUpScreen from './Screens/SignUpScreen';
 import Euromessage from './Euromessage'
-
+import { Asset } from 'expo-asset'
 const Stack = createStackNavigator();
 
 

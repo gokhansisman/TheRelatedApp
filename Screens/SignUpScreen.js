@@ -4,9 +4,11 @@ import { TextInput } from 'react-native-paper';
 import 'react-native-gesture-handler';
 import {
     View,
-    Button,
-    StyleSheet
+    Text,
+    StyleSheet,
+    Image
 } from 'react-native'
+import Button from 'react-native-pure-button'
 import { Euromessage } from '../Euromessage'
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
@@ -21,7 +23,8 @@ export default class SignUp extends Component {
             firstname: '',
             lastname: '',
             token: this.props.route.params.token,
-            KEY_ID: ''
+            KEY_ID: '',
+            expoToken: ''
 
         };
         this.signUp = this.signUp.bind(this)
@@ -95,6 +98,10 @@ export default class SignUp extends Component {
     render() {
         return (
             <View style={styles.container}>
+                 <Image
+            source={require("../assets/logo.png")}
+            style={{ height: 60, width: 200, marginBottom: 20, right: 2, resizeMode: 'stretch' }}
+          />
                 <TextInput
                     style={styles.input}
                     placeholder='Email'
@@ -127,28 +134,50 @@ export default class SignUp extends Component {
                 <Button
                     title='Sign Up'
                     onPress={this.signUp}
-                />
+                    style={styles.register}
+                ><Text style={{ fontSize: 16, color: "#fff", fontFamily: "sans-serif" }} >Sign Up!</Text></Button>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    input: {
-        width: 350,
-        height: 55,
-        backgroundColor: '#42A5F5',
-        margin: 10,
-        padding: 8,
-        color: 'white',
-        borderRadius: 14,
-        fontSize: 18,
-        fontWeight: '500',
-    },
     container: {
         flex: 1,
+        alignItems: 'center',
         justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
+        backgroundColor: '#ffb5a7',
+
+    },
+    register: {
+        width: 110,
+        height: 44,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#e91e63",
+        borderWidth: 1,
+        borderRadius: 12,
+        borderColor: '#F9D87D',
+        color: "#cddc39",
+        margin: 6
+    },
+    input: {
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: '#F9D87D',
+        width: 200,
+        backgroundColor: "#e91e637a",
+        marginBottom: 16
+    },
+    inputext: {
+        width: 200,
+        height: 50,
+        padding: 10,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        borderWidth: 1,
+        borderColor: 'black',
+        marginBottom: 10,
+    },
+});
 
