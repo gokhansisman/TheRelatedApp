@@ -30,7 +30,9 @@ export default class App extends Component {
           <Stack.Screen
             name="Login"
             component={LoginScreen}
-            options={{ title: 'Related Digital', left: null }}
+            options={{
+              title: 'Related Digital', left: null
+            }}
           />
           <Stack.Screen name="Dashboard" component={DashboardScreen} options={{
             title: 'Dashboard', headerLeft: null,

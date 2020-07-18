@@ -26,7 +26,9 @@ export default class LoginScreen extends Component {
       expoToken: null,
       isLogin: '',
       error: '',
-      spinner: false
+      spinner: false,
+      passwordStyle: {},
+      emailStyle: {}
     };
     this.onLogin = this.onLogin.bind(this)
     this.registerForPushNotificationsAsync = this.registerForPushNotificationsAsync.bind(this)
@@ -143,7 +145,8 @@ export default class LoginScreen extends Component {
     //fetch.
     //check credentials
     //navigation.
-    this.setState({ spinner: true })
+
+    this.setState({ spinner: true, emailStyle: {}, passwordStyle: {} })
     fetch('https://store.therelated.com/rest/V1/integration/customer/token', {
       method: 'POST',
       headers: {
@@ -157,16 +160,23 @@ export default class LoginScreen extends Component {
     }).then(res => res.json()).then(res => {
       if (res.message == null) {
         this.setState({
-          token: res,
-          spinner: false
+          token: res
         })
-        this.logIn()
-        this._storeTokenLocal()
-        this.navigateToDashboard()
+        setTimeout(() => {
+          this.setState({
+            spinner: false
+          })
+          this.logIn()
+          this._storeTokenLocal()
+          this.navigateToDashboard()
+        }, 1300)
+
       } else {
         this.setState({
-          error: res.message
+          error: res.message,
+          spinner: false
         })
+        alert(this.state.error)
         // console.log(this.state.error)
       }
       // console.log(res)
@@ -185,6 +195,7 @@ export default class LoginScreen extends Component {
   }
   navigateToSignUp = () => {
     //navigate to Sign Up Page
+    this.setState({ emailStyle: {}, passwordStyle: {} })
     this.props.navigation.navigate('SignUp', {
       token: this.state.expoToken
     })
@@ -200,7 +211,21 @@ export default class LoginScreen extends Component {
     //api.login(userID);
 
   }
+  _onFocus = (params) => {
+    if (params.who == 'password') {
+      this.setState({
+        emailStyle: { borderColor: "#d6951a" },
+        passwordStyle: { borderColor: "#2d3e50" }
+      })
+    }
+    else if (params.who == 'email') {
+      this.setState({
+        emailStyle: { borderColor: "#2d3e50" },
+        passwordStyle: { borderColor: "#d6951a" }
+      })
+    }
 
+  }
   render() {
     const { navigate } = this.props.navigation;
     if (this.state.isLogin == 'false') {
@@ -210,18 +235,26 @@ export default class LoginScreen extends Component {
 
           <Image
             source={require("../assets/logo.png")}
-            style={{ height: 60, width: 200, marginBottom: 20, right: 2, resizeMode: 'stretch' }}
+            style={{ height: 60, width: 200, marginBottom: 60, right: 2, resizeMode: 'stretch' }}
           />
 
           <Spinner
             visible={this.state.spinner}
             animation={"fade"}
-            color="#9e0059"
+            color="#2d3e50"
             textStyle={styles.spinnerTextStyle}
           />
-          <View style={{ flexDirection: "row" }}>
-            <MaterialIcons name="email" style={{ marginLeft: -54, marginRight: 6, top: 10 }} size={48} color="#9e0059" />
+          <View style={{
+            flexDirection: "row", borderColor: "#d6951a", borderWidth: 1, borderLeftWidth: 6,
+            borderBottomWidth: 1, ...this.state.emailStyle
+          }}>
+            <MaterialIcons name="email" style={{
+              margin: 14
+            }} size={24} color="#2d3e50" />
             <TextInput
+              onFocus={this._onFocus.bind(this, { who: "email" })}
+              underlineColor="transparent"
+              theme={{ colors: { text: '#2d3e50', primary: '#d6951a' } }}
               autoCompleteType="email"
               value={this.state.username}
               onChangeText={(username) => this.setState({ username })}
@@ -230,10 +263,16 @@ export default class LoginScreen extends Component {
               style={styles.input}
             />
           </View>
-          <View style={{ flexDirection: "row" }}>
-            <Entypo name="key" style={{ marginLeft: -54, marginRight: 6, top: 12 }} size={48} color="#9e0059" />
+          <View style={{
+            flexDirection: "row", borderColor: "#d6951a", borderWidth: 1, borderLeftWidth: 6,
+            borderBottomWidth: 1, marginTop: 8, ...this.state.passwordStyle
+          }}>
+            <Entypo name="key" style={{ margin: 14 }} size={24} color="#2d3e50" />
             <TextInput
+              onFocus={this._onFocus.bind(this, { who: "password" })}
               autoCompleteType="password"
+              theme={{ colors: { text: '#2d3e50', primary: '#d6951a' } }}
+              underlineColor="transparent"
               value={this.state.password}
               onChangeText={(password) => this.setState({ password })}
               label='Password'
@@ -241,7 +280,7 @@ export default class LoginScreen extends Component {
               style={styles.input}
             />
           </View>
-          <View >
+          <View style={{ marginTop: 40 }}>
             <TouchableOpacity style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <Button
                 title="Login"
@@ -254,12 +293,12 @@ export default class LoginScreen extends Component {
               </Button>
               <Button
                 title="Register"
-                style={styles.register}
+                style={{ ...styles.register, backgroundColor: "none" }}
                 onPress={this.navigateToSignUp}
-              ><Text style={{ color: '#fff' }}>Register</Text></Button>
+              ><Text style={{ color: '#2d3e50' }}>Register</Text></Button>
             </TouchableOpacity>
           </View>
-          <Text style={{ fontSize: 24, fontFamily: "sans-serif" }}>© 2020 Related Digital </Text>
+          <Text style={{ fontSize: 14, color: "#989393", bottom: 20, position: "absolute", fontFamily: "sans-serif" }}>© 2020 Related Digital </Text>
         </View>
       )
     }
@@ -293,28 +332,32 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffb5a7',
+    backgroundColor: '#f0efeb',
 
   },
   register: {
-    width: 110,
+    width: 130,
     height: 44,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e91e63",
+    backgroundColor: "#2d3e50",
     borderWidth: 1,
-    borderRadius: 12,
-    borderColor: '#F9D87D',
+    borderRadius: 4,
+    borderColor: '#2d3e50',
     color: "#cddc39",
     margin: 6
   },
   input: {
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: '#F9D87D',
-    width: 200,
-    backgroundColor: "#e91e637a",
-    marginBottom: 16
+    borderWidth: 0,
+    borderRadius: 0,
+    borderColor: '#d6951a',
+    borderLeftWidth: 0,
+    paddingLeft: 10,
+    width: 250,
+    height: 50,
+    backgroundColor: "#f0efeb",
+    marginBottom: 0,
+    overflow: 'hidden'
   },
   inputext: {
     width: 200,
@@ -327,6 +370,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   spinnerTextStyle: {
-    color: '#FFF'
+    color: '#2d3e50'
   },
 });

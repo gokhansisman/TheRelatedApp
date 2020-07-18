@@ -53,10 +53,9 @@ export default class SignUp extends Component {
                 this.setState({
                     KEY_ID: res.id
                 })
-                console.log(res.id)
+                alert(res.message)
                 this.navigateToLoginScreen()
             });
-            console.log('user successfully signed up!: ')
             // this.navigateToLoginScreen()
         } catch (err) {
             console.log('error signing up: ', err)
@@ -98,12 +97,13 @@ export default class SignUp extends Component {
     render() {
         return (
             <View style={styles.container}>
-                 <Image
-            source={require("../assets/logo.png")}
-            style={{ height: 60, width: 200, marginBottom: 20, right: 2, resizeMode: 'stretch' }}
-          />
+                <Image
+                    source={require("../assets/logo.png")}
+                    style={{ height: 60, width: 200, marginBottom: 20, right: 2, resizeMode: 'stretch' }}
+                />
                 <TextInput
                     style={styles.input}
+                    theme={{ colors: { text: '#2d3e50', primary: '#d6951a' } }}
                     placeholder='Email'
                     autoCapitalize="none"
                     placeholderTextColor='white'
@@ -111,6 +111,7 @@ export default class SignUp extends Component {
                 />
                 <TextInput
                     style={styles.input}
+                    theme={{ colors: { text: '#2d3e50', primary: '#d6951a' } }}
                     placeholder='Password'
                     secureTextEntry={true}
                     autoCapitalize="none"
@@ -118,6 +119,7 @@ export default class SignUp extends Component {
                     onChangeText={val => this.onChangeText('password', val)}
                 />
                 <TextInput
+                    theme={{ colors: { text: '#2d3e50', primary: '#d6951a' } }}
                     style={styles.input}
                     placeholder='Firstname'
                     autoCapitalize="none"
@@ -125,17 +127,20 @@ export default class SignUp extends Component {
                     onChangeText={val => this.onChangeText('firstname', val)}
                 />
                 <TextInput
+                    theme={{ colors: { text: '#2d3e50', primary: '#d6951a' } }}
                     style={styles.input}
                     placeholder='Lastname'
                     autoCapitalize="none"
                     placeholderTextColor='white'
                     onChangeText={val => this.onChangeText('lastname', val)}
                 />
-                <Button
-                    title='Sign Up'
-                    onPress={this.signUp}
-                    style={styles.register}
-                ><Text style={{ fontSize: 16, color: "#fff", fontFamily: "sans-serif" }} >Sign Up!</Text></Button>
+                <View style={{ top: 40 }}>
+                    <Button
+                        title='Sign Up'
+                        onPress={this.signUp}
+                        style={styles.register}
+                    ><Text style={{ fontSize: 16, color: "#fff", fontFamily: "sans-serif" }} >Sign Up!</Text></Button>
+                </View>
             </View>
         )
     }
@@ -146,28 +151,33 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#ffb5a7',
+        backgroundColor: '#f0efeb',
 
     },
     register: {
-        width: 110,
+        width: 130,
         height: 44,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#e91e63",
+        backgroundColor: "#2d3e50",
         borderWidth: 1,
-        borderRadius: 12,
-        borderColor: '#F9D87D',
+        borderRadius: 4,
+        borderColor: '#2d3e50',
         color: "#cddc39",
         margin: 6
     },
     input: {
-        borderWidth: 1,
-        borderRadius: 4,
-        borderColor: '#F9D87D',
-        width: 200,
-        backgroundColor: "#e91e637a",
-        marginBottom: 16
+        borderWidth: 0,
+        borderRadius: 0,
+        borderColor: '#d6951a',
+        borderLeftWidth: 0,
+        paddingLeft: 10,
+        width: 250,
+        height: 50,
+        backgroundColor: "#f0efeb",
+        marginBottom: 0,
+        overflow: 'hidden'
+
     },
     inputext: {
         width: 200,
@@ -178,6 +188,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,
+    },
+    spinnerTextStyle: {
+        color: '#2d3e50'
     },
 });
 
