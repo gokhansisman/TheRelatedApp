@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Alert, Button, View, StyleSheet } from 'react-native';
+import { Text, Alert, Button, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,6 +9,7 @@ import DashboardScreen from './Screens/DashboardScreen';
 import SignUpScreen from './Screens/SignUpScreen';
 import Euromessage from './Euromessage'
 import { Asset } from 'expo-asset'
+import { FontAwesome5 } from '@expo/vector-icons'
 const Stack = createStackNavigator();
 
 
@@ -34,10 +35,18 @@ export default class App extends Component {
               title: 'Related Digital', left: null
             }}
           />
-          <Stack.Screen name="Dashboard" component={DashboardScreen} options={{
-            title: 'Dashboard', headerLeft: null,
-            gesturesEnabled: false,
-          }} />
+          <Stack.Screen name="Dashboard" component={DashboardScreen}
+            defaultNavigationOptions={({ navigation }) => ({
+              /* headerRight: (props) => <TouchableOpacity style={{
+                alignItems: "flex-end", margin: 16
+              }}
+                onPress={() => navigation.openDrawer()}>
+                <FontAwesome5 name="bars" size={24} color="#161924" />
+              </TouchableOpacity>, */
+              title: 'Dashboard', headerLeft: null,
+              gesturesEnabled: false
+            })}
+          />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
         </Stack.Navigator>
       </NavigationContainer>

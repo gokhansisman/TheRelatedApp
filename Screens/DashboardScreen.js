@@ -10,6 +10,9 @@ import { ProfileScreen, MessageScreen, ActivityScreen, ListScreen, ReportScreen,
 import SideBar from '../components/SideBar.js'
 import { decode as atob, encode as btoa } from 'base-64'
 
+
+
+
 export default class DashboardScreen extends Component {
     constructor(props) {
         super(props);
@@ -18,7 +21,7 @@ export default class DashboardScreen extends Component {
             //name: this.props.name,
         }
     }
-    static username=''
+    static username = ''
     render() {
         return (
             <AppContainer />
@@ -37,18 +40,44 @@ export default class DashboardScreen extends Component {
                 this.setState({
                     data: json,
                 })
-                DashboardScreen.username=json.firstname
+                DashboardScreen.username = json.firstname
                 this.showData()
             });
     }
     showData() {
-        
+
     }
 }
 
 
 
 const DrawerNavigator = createDrawerNavigator({
+    ListScreen:
+    {
+        screen: ListScreen, navigationOptions:
+        {
+            title: "Lists", drawerIcon: ({ tintColor }) =>
+                <Feather name="list" size={16} color={tintColor} />
+        }
+    },
+    MessageScreen:
+    {
+        screen: MessageScreen,
+        
+        navigationOptions:
+        {
+            title: "Message", drawerIcon: ({ tintColor }) =>
+                <Feather name="message-square" size={16} color={tintColor} />
+    
+        }
+    }, ActivityScreen:
+    {
+        screen: ActivityScreen, navigationOptions:
+        {
+            title: "Activities", drawerIcon: ({ tintColor }) =>
+                <Feather name="activity" size={16} color={tintColor} />
+        }
+    },
     ProfileScreen:
     {
         screen: ProfileScreen,
@@ -59,30 +88,7 @@ const DrawerNavigator = createDrawerNavigator({
                     <Feather name="user" size={16} color={tintColor} />
         }
     },
-    MessageScreen:
-    {
-        screen: MessageScreen,
-        navigationOptions:
-        {
-            title: "Message", drawerIcon: ({ tintColor }) =>
-                <Feather name="message-square" size={16} color={tintColor} />
-        }
-    }, ActivityScreen:
-    {
-        screen: ActivityScreen, navigationOptions:
-        {
-            title: "Activities", drawerIcon: ({ tintColor }) =>
-                <Feather name="activity" size={16} color={tintColor} />
-        }
-    },
-    ListScreen:
-    {
-        screen: ListScreen, navigationOptions:
-        {
-            title: "Lists", drawerIcon: ({ tintColor }) =>
-                <Feather name="list" size={16} color={tintColor} />
-        }
-    }, ReportScreen:
+    ReportScreen:
     {
         screen: ReportScreen, navigationOptions:
         {
@@ -102,7 +108,7 @@ const DrawerNavigator = createDrawerNavigator({
         }
     }
 }, {
-    contentComponent: props => <SideBar {...props} data={DashboardScreen.username}/>,
+    contentComponent: props => <SideBar {...props} data={DashboardScreen.username} />,
     drawerWidth: Dimensions.get("window").width * 0.85,
     hideStatusBar: true, contentOptions:
     {
