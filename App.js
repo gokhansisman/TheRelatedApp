@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Alert, Button, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, Alert, Button, View, StyleSheet, TouchableOpacity, ListView } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,6 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './Screens/LoginScreen';
 import DashboardScreen from './Screens/DashboardScreen';
 import SignUpScreen from './Screens/SignUpScreen';
+import CategoriesScreen from './Screens/CategoriesScreen';
+import CardScreen from './Screens/CardScreen'
 import Euromessage from './Euromessage'
 import { Asset } from 'expo-asset'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -48,6 +50,8 @@ export default class App extends Component {
             })}
           />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="CategoriesScreen" component={CategoriesScreen} />
+          <Stack.Screen name="CardScreen" component={CardScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );

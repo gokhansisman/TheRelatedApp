@@ -188,7 +188,7 @@ export default class LoginScreen extends Component {
   navigateToDashboard = async () => {
     console.log(this.state.token)
     let _token = await AsyncStorage.getItem('token')
-    this.props.navigation.navigate('Dashboard', {
+    this.props.navigation.navigate('CategoriesScreen', {
       userName: this.state.username,
       token: _token
     })
