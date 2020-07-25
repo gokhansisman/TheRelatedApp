@@ -14,6 +14,7 @@ import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import { NavigationContainer } from '@react-navigation/native';
 
+
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -28,12 +29,13 @@ export default class SignUp extends Component {
 
         };
         this.signUp = this.signUp.bind(this)
+        this.registerForPushNotificationsAsync = this.registerForPushNotificationsAsync.bind(this)
     }
 
     onChangeText = (key, val) => {
         this.setState({ [key]: val })
     }
-    signUp = async () => {
+    signUp = () => {
         try {
             fetch('https://store.therelated.com/rest/V1/customers', {
                 method: 'POST',
@@ -50,16 +52,21 @@ export default class SignUp extends Component {
                     password: this.state.password
                 })
             }).then(res => res.json()).then(res => {
+                if(res.message!=null)
+                {
+                    alert(res.message)
+                }
+                else{
                 this.setState({
                     KEY_ID: res.id
                 })
-                alert(res.message)
                 this.navigateToLoginScreen()
+            }
             });
-            // this.navigateToLoginScreen()
         } catch (err) {
-            console.log('error signing up: ', err)
+            alert(err)
         }
+        // this.navigateToLoginScreen()
     }
     async registerForPushNotificationsAsync() {
         const { status: existingStatus } = await Permissions.getAsync(
@@ -83,9 +90,6 @@ export default class SignUp extends Component {
         this.setState({
             expoToken: token
         })
-    }
-    navigateToLoginScreen = () => {
-        this.registerForPushNotificationsAsync()
         var user = { keyID: this.state.KEY_ID, email: this.state.email, token: this.state.expoToken };
         let api = Euromessage()
         api.euromsg.setUser(user);
@@ -93,6 +97,9 @@ export default class SignUp extends Component {
         this.props.navigation.navigate('Login', {
 
         })
+    }
+    navigateToLoginScreen = () => {
+        this.registerForPushNotificationsAsync()
     }
     render() {
         return (
@@ -109,6 +116,7 @@ export default class SignUp extends Component {
                     placeholderTextColor='white'
                     onChangeText={val => this.onChangeText('email', val)}
                 />
+                <MyTabs/>
                 <TextInput
                     style={styles.input}
                     theme={{ colors: { text: '#2d3e50', primary: '#d6951a' } }}

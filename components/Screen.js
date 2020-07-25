@@ -4,8 +4,8 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
 import { ScrollView } from 'react-native-gesture-handler'
-import ListView from '../components/ListView'
-
+import ListView from './ListView'
+import TabScreen from './TabScreen'
 
 export default class Screen extends React.Component {
     constructor(props) {
@@ -13,8 +13,8 @@ export default class Screen extends React.Component {
         this.state = {
             spinner: false,
             categories: [],
-            level:null,
-            position:null
+            level: null,
+            position: null
         };
 
     }
@@ -37,7 +37,6 @@ export default class Screen extends React.Component {
                 console.log(this.state.categories)
             });
     }
-
     render() {
         if (this.props.name == 'Profile') {
             return (<View style={styles.container}>
@@ -59,11 +58,28 @@ export default class Screen extends React.Component {
                         onPress={this.props.navigation.openDrawer}>
                         <FontAwesome5 name="bars" size={24} color="#161924" />
                     </TouchableOpacity>
-
                     <ScrollView style={{ flex: 1, flexDirection: "column" }}>
                         <ListView dizi={this.state.categories} />
                     </ScrollView>
                 </SafeAreaView>
+            </View>)
+
+        }
+        else if (this.props.name == 'Activity') {
+            return (<View style={styles.container}>
+                <SafeAreaView style={{ flex: 1 }}>
+                    <TouchableOpacity style={{ alignItems: "flex-end", margin: 16 }}
+                        onPress={this.props.navigation.openDrawer}>
+                        <FontAwesome5 name="bars" size={24} color="#161924" />
+                    </TouchableOpacity>
+
+                    <ScrollView style={{ flex: 1, flexDirection: "column" }}>
+                        <View style={styles.container}>
+                            <TabScreen />
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+
             </View>)
 
         }
