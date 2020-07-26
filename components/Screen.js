@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import Spinner from 'react-native-loading-spinner-overlay'
-import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
+
 import { ScrollView } from 'react-native-gesture-handler'
 import ListView from './ListView'
 import TabScreen from './TabScreen'

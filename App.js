@@ -50,7 +50,17 @@ export default class App extends Component {
             })}
           />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="CategoriesScreen" component={CategoriesScreen} />
+          <Stack.Screen name="CategoriesScreen" component={CategoriesScreen}
+          defaultNavigationOptions={({ navigation }) => ({
+            /* headerRight: (props) => <TouchableOpacity style={{
+              alignItems: "flex-end", margin: 16
+            }}
+              onPress={() => navigation.openDrawer()}>
+              <FontAwesome5 name="bars" size={24} color="#161924" />
+            </TouchableOpacity>, */
+            title: 'Categories', headerLeft: null,
+            gesturesEnabled: false
+          })} />
           <Stack.Screen name="CardScreen" component={CardScreen} />
         </Stack.Navigator>
       </NavigationContainer>

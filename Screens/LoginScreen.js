@@ -190,7 +190,8 @@ export default class LoginScreen extends Component {
     let _token = await AsyncStorage.getItem('token')
     this.props.navigation.navigate('CategoriesScreen', {
       userName: this.state.username,
-      token: _token
+      token: _token,
+      title:'Categories'
     })
   }
   navigateToSignUp = () => {

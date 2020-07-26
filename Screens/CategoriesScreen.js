@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ListView from '../components/ListView'
+import { View,Text,Button } from 'react-native'
 
 
 export default class CategoriesScreen extends Component {
@@ -14,14 +15,15 @@ export default class CategoriesScreen extends Component {
     }
     render() {
         return (
-            <ListView dizi={this.state.categories} onClick={this.onClick} />)
+          
+                <ListView dizi={this.state.categories} onClick={this.onClick} />
+               )
     }
     onClick = (itemID) => {
         this.navigateToDashboard(itemID)
     }
     navigateToDashboard = (itemID) => {
         //let _token = await AsyncStorage.getItem('token')
-        console.log({ navigateToDashboard: "ASDASD" })
         let currentData = this.state.categories.filter(data => data.id == itemID)[0]
         let newDizi = currentData.children_data
         if (newDizi.length >= 1) {
