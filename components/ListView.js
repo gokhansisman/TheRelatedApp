@@ -42,7 +42,7 @@ export default class ListView extends React.Component {
         return this.props.dizi.map((data, index) =>
 
             <TouchableOpacity key={index} style={{
-                backgroundColor: "#ccc", margin: 2,
+                backgroundColor: "#e6edb7", margin: 2,
                 padding: 10
             }} onPress={() => this.actionOnRow(data.id)}>
                 <View style={{ flexDirection: "row" }}>
@@ -51,10 +51,10 @@ export default class ListView extends React.Component {
                         source={{ uri: this.getImageById(data.id) }} />
                     <Text style={{
                         marginLeft: 10, fontSize: 20,
-                        fontFamily: "sans-serif", textAlignVertical:
+                         textAlignVertical:
                             "center"
                     }}>{data.name}</Text>
-                    <AntDesign name="right" size={24} color="gray"
+                    <AntDesign name="right" size={24} color="#00a5a5"
                         style={{ right: 10, position: "absolute", alignSelf: "center" }} />
                 </View>
             </TouchableOpacity>

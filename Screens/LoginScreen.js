@@ -16,6 +16,7 @@ import TextField from '../components/TextField'
 import { AsyncStorage } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
+
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -44,6 +45,7 @@ export default class LoginScreen extends Component {
         sound: true,
       });
     }
+    
   }
   _storeData = async () => {
     try {
@@ -299,7 +301,7 @@ export default class LoginScreen extends Component {
               ><Text style={{ color: '#2d3e50' }}>Register</Text></Button>
             </TouchableOpacity>
           </View>
-          <Text style={{ fontSize: 14, color: "#989393", bottom: 20, position: "absolute", fontFamily: "sans-serif" }}>© 2020 Related Digital </Text>
+          <Text style={{ fontSize: 14, color: "#989393", bottom: 20, position: "absolute" }}>© 2020 Related Digital </Text>
         </View>
       )
     }
@@ -310,7 +312,7 @@ export default class LoginScreen extends Component {
             source={require("../assets/logo.png")}
             style={{ height: 60, width: 200, marginBottom: 20, right: 2, resizeMode: 'stretch' }}
           />
-          <Text style={{ fontSize: 18, fontFamily: "sans-serif" }}>Welcome {this.state.username}</Text>
+          <Text style={{ fontSize: 18 }}>Welcome {this.state.username}</Text>
           <Button
             title='Contunie'
             style={styles.register}

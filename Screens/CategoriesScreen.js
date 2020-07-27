@@ -4,7 +4,7 @@ import { View,Text,Button } from 'react-native'
 
 
 export default class CategoriesScreen extends Component {
-
+    
     constructor(props) {
         super(props)
         this.state = {
@@ -22,6 +22,8 @@ export default class CategoriesScreen extends Component {
     onClick = (itemID) => {
         this.navigateToDashboard(itemID)
     }
+    
+
     navigateToDashboard = (itemID) => {
         //let _token = await AsyncStorage.getItem('token')
         let currentData = this.state.categories.filter(data => data.id == itemID)[0]

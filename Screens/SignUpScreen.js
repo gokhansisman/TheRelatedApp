@@ -116,7 +116,6 @@ export default class SignUp extends Component {
                     placeholderTextColor='white'
                     onChangeText={val => this.onChangeText('email', val)}
                 />
-                <MyTabs/>
                 <TextInput
                     style={styles.input}
                     theme={{ colors: { text: '#2d3e50', primary: '#d6951a' } }}
@@ -147,7 +146,7 @@ export default class SignUp extends Component {
                         title='Sign Up'
                         onPress={this.signUp}
                         style={styles.register}
-                    ><Text style={{ fontSize: 16, color: "#fff", fontFamily: "sans-serif" }} >Sign Up!</Text></Button>
+                    ><Text style={{ fontSize: 16, color: "#fff" }} >Sign Up!</Text></Button>
                 </View>
             </View>
         )

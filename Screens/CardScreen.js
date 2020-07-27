@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { View,Button, TouchableWithoutFeedback, Text, Image, StyleSheet } from 'react-native'
+import { View, Button, TouchableWithoutFeedback, Text, Image, StyleSheet } from 'react-native'
 import { Card } from 'react-native-paper'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { color } from 'react-native-reanimated'
-
+import { AsyncStorage } from 'react-native';
 
 
 export default class CardScreen extends Component {
@@ -12,16 +12,40 @@ export default class CardScreen extends Component {
         this.state = {
             title: this.props.route.params.title,
             itemID: this.props.route.params.itemID,
-            products: []
+            products: [],
+            basketProducts: []
         }
         this.props.navigation.setOptions({ title: this.state.title })
 
     }
-    actionOnRow = (items) => {
-        console.log('-----------')
+
+    actionOnRow = async (items) => {
         console.log('selected item: ', items)
+        
+        let basketProducts = this.state.basketProducts
+        basketProducts.push(items)
+        this.setState({
+            basketProducts: basketProducts
+        })
+        console.log(this.state.basketProducts)
+        try {
+            await AsyncStorage.setItem('ProductsInBasket', JSON.stringify(this.state.basketProducts));
+        } catch (error) {
+
+        }
+        
+        alert("Product Added to Basket!")
     }
-    componentDidMount() {
+    getProductfromStorage = async () => {
+        try {
+            await AsyncStorage.getItem('ProductsInBasket', (error, result) => {
+                this.setState({ basketProducts: JSON.parse(result) }, function () {
+                });
+            });
+        } catch (error) {
+        }
+    }
+    componentDidMount = async () => {
         let itemID = this.state.itemID
         fetch(`https://store.therelated.com/rest/V1/products?fields=items[id,sku,name,price,visibility,custom_attributes,extension_attributes]&searchCriteria[pageSize]=100&searchCriteria[filter_groups][0][filters][0][field]=category_id&searchCriteria[filter_groups][0][filters][0][value]=${itemID}&searchCriteria[filter_groups][0][filters][0][condition_type]=eq`, {
             method: 'get',
@@ -35,28 +59,39 @@ export default class CardScreen extends Component {
                 })
                 //  console.log(this.state.products[0].name)
             });
+            try {
+                await AsyncStorage.setItem('ProductsInBasket', JSON.stringify(this.state.basketProducts));
+            } catch (error) {
+    
+            }
+            this.getProductfromStorage()
+
     }
 
     render() {
         let title = this.state.title
+        let imageURL = 'https://store.therelated.com/media/catalog/product'
         return (
-            <View style={{ flex: 1, padding: 5,borderRadius:2,borderWidth:2,borderTopColor:"orange"}}>
+            <View style={{ flex: 1, padding: 2, borderRadius: 2, borderWidth: 2, borderTopColor: "orange" }}>
                 <FlatList
                     data={this.state.products}
-                
+
                     renderItem={({ item }) =>
-                        <TouchableWithoutFeedback onPress={() => this.actionOnRow(item)} >
+                        <TouchableWithoutFeedback >
                             <Card >
                                 <View style={styles.container
                                 }>
+                                    <Image style={{ flex: 1, height: 100, width: 100 }} resizeMode='cover'
+                                        source={{ uri: imageURL + item.custom_attributes[0].value }}></Image>
                                     <Text style={styles.paragraph}>SKU : {item.sku}</Text>
                                     <Text style={styles.paragraph}>{item.name}</Text>
-                                    <Text style={styles.paragraph}>Price : {item.price}</Text>
-                                    <Button title="Add Basket" onPress={()=>this.actionOnRow(item.id)}></Button>
+                                    <Text style={styles.paragraph}>Price : {item.price}$</Text>
+
+                                    <Button title="Add Basket" onPress={() => this.actionOnRow(item.sku)}></Button>
                                 </View>
                             </Card>
                         </TouchableWithoutFeedback>}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.id.toString()}
                 />
             </View>
         )
@@ -82,8 +117,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        borderBottomColor:"orange",
-        borderBottomWidth:1,
+        borderBottomColor: "orange",
+        borderBottomWidth: 1,
         justifyContent: 'center',
         paddingTop: 40,
         backgroundColor: '#FFFFFF',
