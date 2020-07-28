@@ -26,49 +26,43 @@ export default class SignUp extends Component {
             token: this.props.route.params.token,
             KEY_ID: '',
             expoToken: ''
-
         };
-        this.signUp = this.signUp.bind(this)
-        this.registerForPushNotificationsAsync = this.registerForPushNotificationsAsync.bind(this)
+
     }
 
     onChangeText = (key, val) => {
         this.setState({ [key]: val })
     }
     signUp = () => {
-        try {
-            fetch('https://store.therelated.com/rest/V1/customers', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
+        fetch('https://store.therelated.com/rest/V1/customers', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                customer: {
+                    email: this.state.email,
+                    firstname: this.state.firstname,
+                    lastname: this.state.lastname
                 },
-                body: JSON.stringify({
-                    customer: {
-                        email: this.state.email,
-                        firstname: this.state.firstname,
-                        lastname: this.state.lastname
-                    },
-                    password: this.state.password
-                })
-            }).then(res => res.json()).then(res => {
-                if(res.message!=null)
-                {
-                    alert(res.message)
-                }
-                else{
+                password: this.state.password
+            })
+        }).then(res => res.json()).then(res => {
+            alert(res)
+            if (res.message != null) {
+                alert(res.message)
+            }
+            else {
                 this.setState({
                     KEY_ID: res.id
                 })
-                this.navigateToLoginScreen()
+                this.registerForPushNotificationsAsync()
             }
-            });
-        } catch (err) {
-            alert(err)
-        }
+        });
         // this.navigateToLoginScreen()
     }
-    async registerForPushNotificationsAsync() {
+    registerForPushNotificationsAsync = async () => {
         const { status: existingStatus } = await Permissions.getAsync(
             Permissions.NOTIFICATIONS
         );
@@ -86,20 +80,17 @@ export default class SignUp extends Component {
             return;
         }
         // Get the token that uniquely identifies this device
-        let token = await Notifications.getExpoPushTokenAsync();
+        let token2 = await Notifications.getExpoPushTokenAsync();
         this.setState({
-            expoToken: token
+            expoToken: token2
         })
-        var user = { keyID: this.state.KEY_ID, email: this.state.email, token: this.state.expoToken };
+        var user = { keyID: this.state.KEY_ID, email: this.state.email, token: token2};
         let api = Euromessage()
         api.euromsg.setUser(user);
 
         this.props.navigation.navigate('Login', {
 
         })
-    }
-    navigateToLoginScreen = () => {
-        this.registerForPushNotificationsAsync()
     }
     render() {
         return (

@@ -45,6 +45,7 @@ export default class LoginScreen extends Component {
         sound: true,
       });
     }
+    console.log(AsyncStorage.getItem('token'))
     
   }
   _storeData = async () => {
