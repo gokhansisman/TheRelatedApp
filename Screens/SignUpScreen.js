@@ -49,20 +49,20 @@ export default class SignUp extends Component {
                 password: this.state.password
             })
         }).then(res => res.json()).then(res => {
-            alert(res)
+           
             if (res.message != null) {
                 alert(res.message)
             }
-            else {
-                this.setState({
-                    KEY_ID: res.id
-                })
-                this.registerForPushNotificationsAsync()
-            }
+            this.setState({
+                KEY_ID: res.id
+            })
+            alert(this.state.KEY_ID)
+            this.registerForPushNotificationsAsync()
         });
         // this.navigateToLoginScreen()
     }
     registerForPushNotificationsAsync = async () => {
+     
         const { status: existingStatus } = await Permissions.getAsync(
             Permissions.NOTIFICATIONS
         );
@@ -79,15 +79,17 @@ export default class SignUp extends Component {
         if (finalStatus !== 'granted') {
             return;
         }
+        
         // Get the token that uniquely identifies this device
         let token2 = await Notifications.getExpoPushTokenAsync();
+       
         this.setState({
             expoToken: token2
         })
-        var user = { keyID: this.state.KEY_ID, email: this.state.email, token: token2};
+        alert(token2)
+        var user = { keyID: this.state.KEY_ID, email: this.state.email, token: token2 };
         let api = Euromessage()
         api.euromsg.setUser(user);
-
         this.props.navigation.navigate('Login', {
 
         })

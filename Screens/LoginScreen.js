@@ -25,7 +25,7 @@ export default class LoginScreen extends Component {
       password: '',
       token: null,
       expoToken: null,
-      isLogin: '',
+      isLogin: null,
       error: '',
       spinner: false,
       passwordStyle: {},
@@ -45,7 +45,6 @@ export default class LoginScreen extends Component {
         sound: true,
       });
     }
-    console.log(AsyncStorage.getItem('token'))
     
   }
   _storeData = async () => {
@@ -67,8 +66,7 @@ export default class LoginScreen extends Component {
   _retrieveData = async () => {
     try {
       const isLogin = await AsyncStorage.getItem('isLogin');
-      console.log(isLogin)
-      if (isLogin !== null) {
+      if (isLogin != null) {
         this.setState({
           isLogin: isLogin
         })

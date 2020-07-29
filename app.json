@@ -23,7 +23,13 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.pa1ngokhan.TheRelatedApp"
+      "package": "com.pa1ngokhan.TheRelatedApp",
+      "googleServicesFile": "./google-services.json",
+        "config": {
+         "googleSignIn": {
+          "apiKey": "AIzaSyBYw3zQwThvMcMj6InKQcWIOxvquNTAE5o"
+        }
+      }
     }
   }
 }
