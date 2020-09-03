@@ -7,7 +7,7 @@ Integration between RMC platform of Related Digital.
 Sending & Receiving Push Notifications.
 
 Login Screen 
-![login](https://i.imgur.com/ypW7sx9.jpeg | width=100)
+[url=https://hizliresim.com/H6UiZq][img]https://i.hizliresim.com/H6UiZq.jpg[/img][/url]
 
 SignUp Screen
 
