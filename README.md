@@ -6,16 +6,19 @@ Integration between RMC platform of Related Digital.
 
 Sending & Receiving Push Notifications.
 
-Login Screen 
-[url=https://hizliresim.com/H6UiZq][img]https://i.hizliresim.com/H6UiZq.jpg[/img][/url]
+> Login Screen 
+![login](https://i.hizliresim.com/H6UiZq.jpg)
 
-SignUp Screen
+> SignUp Screen
+![login](https://i.hizliresim.com/iAHUaR.jpg)
 
+> Category Screen 
+![login](https://i.hizliresim.com/igNxYZ.jpg)
 
-Category Screen 
+> Example Push Test
+![login](https://i.hizliresim.com/R2fepz.jpg)
 
+> Basket Screen 
+![login](https://i.hizliresim.com/mS3eRC.jpg)
 
-Example Push Test
-
-
-Basket Screen 
+## After clone repo ; npm install -> npm start 
