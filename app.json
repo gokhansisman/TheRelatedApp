@@ -24,9 +24,10 @@
     },
     "android": {
       "package": "com.pa1ngokhan.TheRelatedApp",
+      "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json",
-        "config": {
-         "googleSignIn": {
+      "config": {
+        "googleSignIn": {
           "apiKey": "AIzaSyBYw3zQwThvMcMj6InKQcWIOxvquNTAE5o"
         }
       }

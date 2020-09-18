@@ -30,12 +30,13 @@ export default class Screen extends React.Component {
             }),
         }).then(res => res.json())
             .then(json => {
-
+                
                 this.setState({
                     categories: json.children_data
                 })
                 console.log(this.state.categories)
             });
+            
     }
     render() {
         if (this.props.name == 'Profile') {

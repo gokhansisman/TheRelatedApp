@@ -5,7 +5,8 @@ import { TextInput } from 'react-native-paper';
 import 'react-native-gesture-handler';
 import { Font } from 'expo';
 import { Euromessage } from '../Euromessage'
-import { Notifications } from 'expo';
+//import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import { NavigationContainer } from '@react-navigation/native';
 import { create_api } from '@relateddigital/visilabs-react-native';
@@ -34,19 +35,33 @@ export default class LoginScreen extends Component {
     this.onLogin = this.onLogin.bind(this)
     this.registerForPushNotificationsAsync = this.registerForPushNotificationsAsync.bind(this)
   }
-  componentDidMount() {
+  componentDidMount = async () => {
     if (AsyncStorage.getItem('isLogin') == null) {
       this._storeData()
     }
     this._retrieveData()
-    if (Platform.OS === 'android') {
-      Notifications.createChannelAndroidAsync('default', {
-        name: 'default',
-        sound: true,
-      });
-    }
-    
+    /*  if (Platform.OS === 'android') {
+       Notifications.createChannelAndroidAsync('default', {
+         name: 'default',
+         sound: true,
+       });
+     } */
+    /*  this._notificationSubscription = Notifications.addListener(
+       this._handleNotification);
+     console.log(this._notificationSubscription.listener())
+   } */
+    Notifications.addNotificationReceivedListener(this._handleNotification);
   }
+  _handleNotification = notification => {
+   // console.log("gokhan", notification)
+   console.log(notification)
+    console.log(notification["request"]["content"]["data"].pushId)
+    let pushID = notification["request"]["content"]["data"].pushId
+    let api = Euromessage()
+    api.euromsg.reportRead(pushID);
+  };
+
+
   _storeData = async () => {
     try {
       await AsyncStorage.setItem(
@@ -118,6 +133,14 @@ export default class LoginScreen extends Component {
     // Stop here if the user did not grant permissions
     if (finalStatus !== 'granted') {
       return;
+    }
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('default', {
+        name: 'default',
+        sound: true,
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      });
     }
 
     // Get the token that uniquely identifies this device
@@ -192,7 +215,7 @@ export default class LoginScreen extends Component {
     this.props.navigation.navigate('CategoriesScreen', {
       userName: this.state.username,
       token: _token,
-      title:'Categories'
+      title: 'Categories'
     })
   }
   navigateToSignUp = () => {
@@ -207,7 +230,7 @@ export default class LoginScreen extends Component {
     alert(this.state.expoToken)
     var user = { keyID: "123456", email: "abdullah2@darcin.com", token: this.state.expoToken };
     //alert(JSON.stringify(Euromessage()))
-    let api = Euromessage()
+    //let api = Euromessage()
     //api.euromsg.setUser(user); 
     //api.signUp("12345");
     //api.login(userID);

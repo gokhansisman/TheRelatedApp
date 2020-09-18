@@ -16,24 +16,21 @@ export default class CardScreen extends Component {
             basketProducts: []
         }
         this.props.navigation.setOptions({ title: this.state.title })
-
     }
-
     actionOnRow = async (items) => {
         console.log('selected item: ', items)
-        
-        let basketProducts = this.state.basketProducts
+
+        let basketProducts = this.state.basketProducts != null ? this.state.basketProducts : []
         basketProducts.push(items)
         this.setState({
             basketProducts: basketProducts
-        })
-        console.log(this.state.basketProducts)
-        try {
-            await AsyncStorage.setItem('ProductsInBasket', JSON.stringify(this.state.basketProducts));
-        } catch (error) {
+        }, async function () {
+            try {
+                await AsyncStorage.setItem('ProductsInBasket', JSON.stringify(this.state.basketProducts));
+            } catch (error) {
 
-        }
-        
+            }
+        })
         alert("Product Added to Basket!")
     }
     getProductfromStorage = async () => {
@@ -57,17 +54,9 @@ export default class CardScreen extends Component {
                 this.setState({
                     products: json.items
                 })
-                //  console.log(this.state.products[0].name)
             });
-            try {
-                await AsyncStorage.setItem('ProductsInBasket', JSON.stringify(this.state.basketProducts));
-            } catch (error) {
-    
-            }
-            this.getProductfromStorage()
-
+        this.getProductfromStorage()
     }
-
     render() {
         let title = this.state.title
         let imageURL = 'https://store.therelated.com/media/catalog/product'
@@ -95,21 +84,6 @@ export default class CardScreen extends Component {
                 />
             </View>
         )
-        /* return this.state.products.map((data, index) =>
-            
-                <Card>
-                    <TouchableOpacity key={index} style={{
-                        backgroundColor: "#ccc",
-                        height:60
-                    }} onPress={() => this.actionOnRow(data.id)}>
-                        <View style={{ flexDirection: "row" }}>
-                            <Text style={styles.cardText}>{data.name}</Text>
-                            <Text style={styles.cardText}>Sku : {data.sku}</Text>
-                            <Text style={styles.cardText}>Price : {data.price}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </Card>
-        ) */
     }
 }
 
