@@ -17,18 +17,18 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.pa1ngokhan.TheRelatedApp"
+      "bundleIdentifier": "com.euromsg.relatedapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.pa1ngokhan.TheRelatedApp",
+      "package": "com.euromsg.relatedapp",
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json",
       "config": {
         "googleSignIn": {
-          "apiKey": "process.env.API_KEY"
+          "apiKey": "YOUR_OWN_API_KEY"
         }
       }
     }
