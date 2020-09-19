@@ -21,7 +21,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBYw3zQwThvMcMj6InKQcWIOxvquNTAE5o"
+          "current_key": "process.env.API_KEY"
         }
       ],
       "services": {

@@ -28,7 +28,7 @@
       "googleServicesFile": "./google-services.json",
       "config": {
         "googleSignIn": {
-          "apiKey": "AIzaSyBYw3zQwThvMcMj6InKQcWIOxvquNTAE5o"
+          "apiKey": "process.env.API_KEY"
         }
       }
     }
